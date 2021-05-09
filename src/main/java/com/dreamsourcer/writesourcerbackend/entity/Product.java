@@ -12,15 +12,19 @@ import java.util.Date;
 
 @Entity
 @Table(name="product")
-@Data
-//@Getter
-//@Setter
+//@Data -- known Lombok bug
+@Getter
+@Setter
 public class Product {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = false)
+    private ProductCategory category;
 
     @Column(name = "sku")
     private String sku;
@@ -47,12 +51,8 @@ public class Product {
     @CreationTimestamp
     private Date dateCreated;
 
-    @Column(name = "date_updated")
+    @Column(name = "last_updated")
     @UpdateTimestamp
-    private Date dateUpdated;
-
-    @ManyToOne
-    @JoinColumn(name="category_id")
-
+    private Date lastUpdated;
 
 }
